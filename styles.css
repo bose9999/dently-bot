@@ -1,0 +1,2635 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
+    font-size: 0.875rem;
+}
+
+
+#reset-button {
+    position: sticky;
+    top: 10px;
+    right: 10px;
+    float: right;
+    background-color: white;
+    border: 1px solid #0B4F6C;
+    border-radius: 50%;
+    color: #0B4F6C;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: opacity 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0px;
+}
+
+#reset-button.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#reset-button.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#reset-button:hover {
+    background-color: #0B4F6C;
+    color: white;
+}
+
+.main-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.main-content {
+    align-content: center;
+    font-size: large;
+    color: black;
+}
+
+.Heading_1 {
+    align-self: center;
+    font-weight: 1500;
+    font-size: xx-large;
+    color: #007bff;
+    padding-left: 40%;
+}
+
+.chatbot-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #0B4F6C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.chatbot-toggle:hover {
+    background-color: #08A4BD;
+    transform: scale(1.2);
+}
+
+.chatbot-toggle i {
+    transition: all 0.3s ease;
+}
+
+.chatbot-toggle i.hidden {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+#chatbot-container {
+    height: 600px; /* or any appropriate height */
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 40%);
+    padding: 20px; /* Adjust as needed */
+}
+
+#chatbot-container::-webkit-scrollbar { 
+    width: 0;
+    height: 0;
+    background: transparent; /* Chrome/Safari/Webkit */
+}
+
+.chatbot-container {
+    position: fixed;
+    bottom: 90px;
+    right: 0px;
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+#chatbot-messages {
+    position: relative;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+
+
+.chatbot-message {
+    display: flex;
+    align-items: flex-end;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+    margin-bottom: 10px;
+    max-width: 80%;
+    word-wrap: break-word;
+    opacity: 1;
+    /* transform: translateY(20px); */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+.chatbot-message .message-content {
+    position: relative;
+    padding: 10px 15px;
+    background-color: #FBFBFF;
+    border-radius: 18px;
+    border-bottom-left-radius: 0;
+    flex-grow: 1;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #011502;
+    text-align: left;
+    margin-left: 10px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-out;
+}
+
+.chatbot-message .message-content:before {
+    content: "";
+    position: absolute;
+    bottom: 0px;
+    left: -8px;
+    width: 20px;
+    height: 5px;
+    background-color: #FBFBFF;
+    border-bottom-right-radius: 16px;
+    border-bottom-left-radius: 10px;
+    /* border-top-left-radius: 10px; */
+}
+
+.chatbot-message .message-content:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: 0px;
+    left: -8px;
+    width: 20px;
+    height: 5px;
+    background: #FBFBFF; /* Should match your chat background */
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+
+    /* transform: translate(-30px, -2px); */
+} 
+
+.chatbot-message.submitted-message .message-content {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 18px;
+    margin-right: 10px;
+    margin-left: 0;
+}
+
+.chatbot-message.submitted-message .message-content:before,
+.chatbot-message.submitted-message .message-content:after {
+    left: auto;
+    right: -8px;
+}
+
+
+.chatbot-message img.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 3px solid #FBFBFF;
+    background-color: transparent;
+    align-self: flex-end;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+}
+
+.loading span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #011502;
+    border-radius: 50%;
+    margin: 0 2px;
+    opacity: 0.3;
+    animation: loadingDots 1s infinite ease-in-out;
+}
+
+.loading span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.loading span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes loadingDots {
+    0%, 100% { opacity: 0.3; transform: scale(1) }
+    50% { opacity: 1; transform: scale(1.4) }
+}
+
+#chatbot-intents-container {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.intents-options-container {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 150px;
+}
+
+.intent-option-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.intent-option-item:hover {
+    background-color: #f9f9f9;
+}
+
+.intent-option-item.selected {
+    background-color: #e6f2ff;
+    cursor: default;
+}
+
+.intent-option-item.not-selected {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.intent-option-item input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #08A4BD;
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    pointer-events: none;
+}
+
+.intent-option-item input[type="radio"]:checked {
+    border-color: #08A4BD;
+    background-color: #08A4BD;
+    box-shadow: inset 0 0 0 4px #fff;
+}
+
+.redo-button-intent {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    color: #0B4F6C;
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.redo-button-intent:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #fff;
+}
+
+.loading-container {
+    margin-top: 10px;
+}
+
+.loading-message {
+    margin-bottom: 0;
+}
+
+.patient-options-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.patient-option-button {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #ffffff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.patient-option-button:hover:not(:disabled) {
+    background-color: #08A4BD;
+    color: #000;
+}
+
+.patient-option-button.selected {
+    background-color: #0B4F6C;
+    cursor: default;
+    color: #FBFBFF;
+}
+
+.patient-option-button.blurred {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.redo-button-patient {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.redo-button-patient:hover{
+    color: #FBFBFF;
+    background-color: #000;
+    transform: scale(1.2) rotate(360deg);
+}
+.hidden {
+    display: none;
+}
+
+
+.name-input-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+#user-name-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.name-input-container button {
+    padding: 10px 15px;
+    background-color: #0B4F6C;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.name-submission-container {
+    display: flex;
+    align-items: right;
+    justify-content: flex-end;
+    margin-bottom: -10px;
+    margin-right: 10px;
+}
+
+.redo-button-name {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-top: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.redo-button-name:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #FBFBFF;
+}
+
+/* emergency */
+
+.name-input-container-emergency {
+    display: flex;
+    margin-top: 10px;
+}
+
+#user-name-input-emergency {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.name-input-container-emergency button {
+    padding: 10px 15px;
+    background-color: #0B4F6C;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+.name-submission-container-emergency {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.redo-button-name-emergency {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.redo-button-name-emergency:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+} 
+
+.welcome-messages-container {
+    margin-top: 20px;
+}
+
+.name-follow-messages-container {
+    margin-top: 20px;
+}
+
+
+.treatment-slider-container {
+    width: calc(100% - 20px);
+    position: relative;
+    margin: 30px auto 0;
+    padding: 0 15px;
+    overflow: hidden; /* Add this to hide any overflow */
+}
+
+.treatment-slider {
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+    overflow-y: hidden; /* Explicitly hide vertical overflow */
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.treatment-slider::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+}
+
+.treatment-slider-container.selected {
+    opacity: 0.5;
+}
+
+.treatment-card {
+    min-width: 250px;
+    max-width: 250px;
+    height: 250px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    flex-shrink: 0; /* Prevent cards from shrinking */
+}
+
+.treatment-card article {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.treatment-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.treatment-name {
+    position: absolute;
+    bottom: 60px;
+    left: 20px;
+    right: 20px;
+    color: #fff;
+    font-size: 20px; /* Reduced font size */
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+.select-button {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    background: #0B4F6C;
+    color: #FBFBFF;
+    padding: 8px; /* Reduced padding */
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 14px; /* Reduced font size */
+    cursor: pointer;
+}
+.select-button:hover {
+    background-color: #08A4BD;
+    color: #000;
+    transition: all 0.3s ease-in-out;
+}
+.tick-mark {
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    background: #0B4F6C;
+    color: #FBFBFF;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 18px;
+}
+
+.treatment-slider-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0);
+    z-index: 5;
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+}
+
+.treatment-slider-overlay.visible {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.treatment-card.selected {
+    transform: scale(0.9);
+    opacity: 1;
+}
+
+.redo-button-treatment {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 11; /* Ensure this is higher than the overlay's z-index */
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+    pointer-events: auto; /* Ensure the button can receive click events */
+}
+
+.redo-button-treatment.visible {
+    opacity: 1;
+}
+
+.redo-button-treatment:hover {
+    transform: translate(-50%, -50%) scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #fff;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #0B4F6C;
+    color: #FBFBFF;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: cursor 0.3s ease;
+}
+
+.slider-arrow:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.left-arrow {
+    left: -20px;
+}
+.left-arrow:hover {
+    background-color: #08A4BD;
+    color: #000;
+}
+.right-arrow:hover {
+    background-color: #08A4BD;
+    color: #000;
+}
+.right-arrow {
+    right: -20px;
+}
+
+.treatment-card.selected article {
+    transform: translateY(-20px);
+    transition: transform 0.3s;
+}
+
+.after-treatment-follow-messages-container {
+    margin-top: 20px;
+}
+
+
+
+
+.days-options-container {
+    position: relative;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.day-option-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.day-option-item:hover {
+    background-color: #f9f9f9;
+}
+
+.day-option-item.selected {
+    background-color: #e6f2ff;
+}
+
+.day-option-item.not-selected {
+    opacity: 0.5;
+}
+
+.day-option-item input[type="checkbox"] {
+    margin-right: 10px;
+    accent-color: #08A4BD;
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    pointer-events: none;
+}
+
+.day-option-item input[type="checkbox"]:checked {
+    border-color: #08A4BD;
+    background-color: #08A4BD;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' width='18px' height='18px'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px;
+}
+
+.days-options-container.option-selected .day-option-item {
+    pointer-events: none;
+}
+
+.days-continue-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    background-color: #0B4F6C;
+    color: #FBFBFF;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.days-continue-button:hover {
+    background-color: #08A4BD;
+}
+
+/* Additional styles for better appearance */
+#days-selection-container {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.day-option-item:hover {
+    background-color: #f9f9f9;
+}
+
+.day-option-item input[type="checkbox"]:checked + label {
+    font-weight: bold;
+}
+.redo-button-day {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.redo-button-day:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #fff;
+}
+
+
+.times-options-container {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 150px; /* Adjust this value based on your design */
+}
+
+.time-option-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.time-option-item:hover {
+    background-color: #e0e0e0;
+}
+
+.time-option-item.selected {
+    background-color: #e6f2ff;
+    cursor: default;
+}
+
+.time-option-item.not-selected {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.time-option-item input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #08A4BD;
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    pointer-events: none;
+}
+
+.time-option-item input[type="radio"]:checked {
+    border-color: #08A4BD;
+    background-color: #08A4BD;
+    box-shadow: inset 0 0 0 4px #fff;
+}
+
+.times-options-container.option-selected .time-option-item {
+    pointer-events: none;
+}
+
+.redo-button-time {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    /* transform: translate(-50%, -50%); */
+    color: #0B4F6C;
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.redo-button-time:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #fff;
+}
+
+
+.days-follow-up-message-container {
+    margin-top: 20px;
+}
+
+
+.email-input-container {
+    display: flex;
+    margin-top: 10px;
+}
+
+#user-email-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.email-input-container button {
+    padding: 10px 15px;
+    background-color: #0B4F6C;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+
+.email-follow-up-container {
+    margin-top: 20px;
+}
+
+
+.redo-icon-inputs {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.phone-input-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+#user-phone-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+.phone-input-container button {
+    padding: 10px 15px;
+    background-color: #0B4F6C;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+}
+
+
+.dob-input-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    position: relative; /* Add this */
+}
+
+#user-dob-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+    font-size: 14px;
+    max-width: calc(100% - 50px); /* Adjust based on your send button width */
+}
+
+.dob-input-container button {
+    padding: 10px 15px;
+    background-color: #0B4F6C;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    color: white;
+}
+
+
+
+.photo-options-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.photo-option-button {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 25px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.photo-option-button:hover:not(:disabled) {
+    background-color: #08A4BD;
+    color: #000;
+}
+
+.photo-option-button.selected {
+    background-color: #0B4F6C;
+    cursor: default;
+    color: #FBFBFF;
+}
+
+.photo-option-button.not-selected {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.redo-button-photos {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    transition: all 0.3s ease;
+}
+
+.redo-button-photos:hover {
+    background-color: #000;
+    transform: scale(1.2) rotate(360deg);
+    color: #FBFBFF;
+}
+
+.photo-follow-container {
+    margin-top: 20px;
+}
+
+.upload-button {
+    background-color: white;
+    color: #2c3e50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.upload-button:hover {
+    background-color: #08A4BD;
+}
+
+
+.uploaded-image-container {
+    position: relative;
+    display: inline-block;
+    margin-top: 10px;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.uploaded-image {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 10px;
+    margin-left: 50px;
+}
+
+
+
+.enquiry-options-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.enquiry-option-button {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 25px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.enquiry-option-button.selected {
+    background-color: #0B4F6C;
+    cursor: default;
+    color: #FBFBFF;
+}
+
+.enquiry-option-button.not-selected {
+    opacity: 0.5;
+    cursor: default;
+}
+.enquiry-option-button:hover:not(:disabled) {
+    background-color: #08A4BD;
+    color: #000;
+}
+.redo-button-enquiry {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    transition: transform ease-in 0.3s;
+}
+
+.enquiry-messages-container {
+    margin-top: 20px;
+}
+
+.enquiry-text-area-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 5px;
+    margin-top: 10px;
+    position: relative;
+    border: 2px solid #0B4F6C; /* Adjust color as needed */
+}
+
+#enquiry-text-area {
+    flex-grow: 1;
+    border: none;
+    padding: 15px;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+    resize: none;
+    background-color: transparent;
+    min-height: 50px; /* Adjust as needed */
+}
+
+.enquiry-text-area-container button {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0B4F6C;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+
+.enquiry-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+
+.redo-button-enquiry {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color:#0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.redo-button-enquiry:hover {
+    transform: scale(1.3) rotate(360deg);;
+    background-color: #000;
+    color: #FBFBFF;
+}
+
+.redo-button-image{
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.redo-button-image:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #FBFBFF;
+}
+.dob-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+.redo-icon-dob {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color:#0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* color: white; */
+}
+
+.redo-icon-dob:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #FBFBFF;
+}
+
+.phone-submission-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.redo-button-phone{
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* color: white; */
+}
+.redo-button-phone:hover{
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #FBFBFF;
+}
+
+.email-submission-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+.redo-button-email{
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* color: white; */
+}
+.redo-button-email:hover{
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #FBFBFF;
+}
+
+.final-messages-container {
+    margin-top: 20px;
+}
+
+
+.final-choices-container {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    margin-top: 15px;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    min-height: 150px; /* Adjust this value based on your design */
+}
+
+.final-choice-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.final-choice-item:hover {
+    background-color: #f9f9f9;
+}
+
+.final-choice-item.selected {
+    background-color: #e6f2ff;
+    cursor: default;
+}
+
+.final-choice-item.not-selected {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.final-choice-item input[type="radio"] {
+    margin-right: 10px;
+    accent-color: #08A4BD;
+    width: 18px;
+    height: 18px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    pointer-events: none;
+}
+
+.final-choice-item input[type="radio"]:checked {
+    border-color: #08A4BD;
+    background-color: #08A4BD;
+    box-shadow: inset 0 0 0 4px #fff;
+}
+
+.final-choice-item label {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+    pointer-events: none;
+}
+
+.final-choices-container.option-selected .final-choice-item {
+    pointer-events: none;
+}
+
+.redo-button-final-choice {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    color: #0B4F6C;
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.redo-button-final-choice:hover {
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #FBFBFF;
+}
+
+.final-choice-follow-up-container {
+    margin-top: 20px;
+}
+
+
+.privacy-options-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    border-radius: 30px;
+    padding: 10px;
+}
+
+.privacy-option-button {
+    padding: 20px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.privacy-option-button.selected {
+    background-color: #0B4F6C;
+    cursor: default;
+    color: #FBFBFF;
+}
+
+.privacy-option-button.not-selected {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.privacy-option-button:hover:not(:disabled) {
+    background-color: #08A4BD;
+    color: #000;
+}
+
+.redo-button-privacy {
+    background-color: #fff;
+    border: 2px solid #08A4BD;
+    color: #0B4F6C;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+    transition: all ease 0.3s;
+}
+.redo-button-privacy:hover{
+    transform: scale(1.3) rotate(360deg);
+    background-color: #000;
+    color: #FBFBFF;
+}
+
+
+.no-agreement-container {
+    margin-top: 20px;
+}
+
+
+.emergency-messages-container {
+    margin-top: 20px;
+}
+
+
+
+.modal-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 20px;
+    z-index: 1000;
+    height: auto;
+    min-height: 100%;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    z-index: 1001;
+    max-width: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirm-button {
+    background-color: #0B4F6C;
+    color: #FBFBFF;
+}
+
+.cancel-button {
+    background-color: #08A4BD;
+    color: #FBFBFF;
+}
+
+#chatbot-container {
+    transition: opacity 0.3s ease;
+}
+
+#chatbot-container.modal-open {
+    opacity: 0.7;
+}
+
+
+.done-button {
+    display: block;
+    margin: 20px auto;
+    width: 80%;
+    padding: 10px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #FBFBFF;
+    background-color: #0B4F6C;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+.done-button:hover {
+    background-color: #08A4BD;
+    transform: scale(1.05);
+    color: #000;
+}
+
+.done-button.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.done-button.hide {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+#chatbot-container.disabled {
+    opacity: 1;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0,10px,0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        opacity: 0;
+        transform: translate3d(0, 20px, 0);
+    }
+}
+
+.days-options-container,
+.times-options-container,
+#chatbot-intents-container,
+.final-choices-container,
+.treatment-slider-container {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+
+.patient-options-container,
+.photo-options-container,
+.enquiry-options-container,
+.privacy-options-container {
+    animation: fadeInUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+.enquiry-text-area-container,
+.uploaded-image-container,
+.phone-input-container,
+.email-input-container,
+.dob-input-container {
+    animation: fadeInUp 0.4s ease forwards;
+    opacity: 0;
+}
+
+.done-button,
+.upload-button {
+    /* ... other styles ... */
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.done-button.hide {
+    animation: fadeOutDown 0.3s ease forwards;
+}
+
+
+
+@keyframes slideInRight {
+    from { transform: translateX(20px); }
+    to { transform: translateX(0); }
+}
+
+.loading {
+    animation: slideInRight 0.3s ease forwards;
+}
+
+
+
+.name-input-container-emergency,
+.name-input-container,
+.email-input-container,
+.phone-input-container,
+.dob-input-container {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 5px;
+    margin-top: 10px;
+    position: relative;
+}
+
+#user-name-input-emergency,
+#user-name-input,
+#user-email-input,
+#user-phone-input,
+#user-dob-input {
+    flex-grow: 1;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    font-size: 16px;
+    outline: none;
+}
+
+.name-input-container-emergency button,
+.name-input-container button,
+.email-input-container button,
+.phone-input-container button {
+    position: absolute;
+    right: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0B4F6C;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dob-input-container button{
+    right: 0px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #0B4F6C;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.name-input-container-emergency button i,
+.name-input-container button i,
+.email-input-container button i,
+.phone-input-container button i,
+.dob-input-container button i {
+    color: #FBFBFF;
+    font-size: 18px;
+}
+
+
+
+.name-input-container-emergency button:hover i,
+.name-input-container button:hover i,
+.email-input-container button:hover i,
+.phone-input-container button:hover i,
+.dob-input-container button:hover i {
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+
+
+.enquiry-text-area-container button i {
+    color: #FBFBFF;
+    font-size: 18px;
+}
+
+.enquiry-text-area-container button:hover i {
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+
+.email-alert {
+    background-color: #d9534f;
+    color: #FBFBFF;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-bottom: 15px;
+    border-radius: 5px;
+    margin-bottom: -20px;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+
+
+
+.playfair-display-uniquifier {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+@media screen and (max-width: 600px) and (max-height: 960px){
+    .chatbot-container {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        max-height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    #chatbot-container {
+        height: calc(100% - 60px); /* Adjust based on your header/footer height */
+        width: 77%;
+        border-radius: 0;
+        padding: 10px;
+        margin-bottom: 50px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 30%)
+    }
+
+    .chatbot-message {
+        max-width: 90%;
+        padding-bottom: 5px;
+    }
+
+    .chatbot-message .message-content {
+        font-size: 15px;
+        padding: 10px 12px;
+    }
+
+    .chatbot-message img.avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .intents-options-container,
+    .patient-options-container,
+    .privacy-options-container {
+        margin-top: 20px;
+        padding: 10px;
+    }
+    .enquiry-options-container{
+        padding: 15px;
+    }
+    .intent-option-item {
+        padding: 10px 10px;
+        font-size: 15px;
+    }
+
+    .patient-option-button,
+    .privacy-option-button {
+        padding: 15px 15px;
+    }
+    .enquiry-option-button{
+        padding: 20px 20px;
+        /* font-size: 15px; */
+    }
+
+    .redo-button-intent,
+    .redo-button-patient,
+    .redo-button-name,
+    .redo-button-name-emergency,
+    .redo-button-enquiry,
+    .redo-button-email {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .name-input-container,
+    .name-input-container-emergency,
+    .email-input-container,
+    .phone-input-container,
+    .dob-input-container {
+        margin-top: 15px;
+    }
+
+    #user-name-input,
+    #user-name-input-emergency,
+    #user-email-input,
+    #user-phone-input,
+    #user-dob-input {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    .name-input-container button,
+    .name-input-container-emergency button,
+    .email-input-container button,
+    .phone-input-container button,
+    .dob-input-container button {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .treatment-slider-container {
+        width: 100%;
+        padding: 0 20px;
+        margin: 20px auto 0;
+    }
+    .treatment-slider {
+        display: flex;
+        gap: 40px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        margin-left: 10px;
+    }
+
+    .treatment-card {
+        min-width: 220px;
+        max-width: 220px;
+        height: 220px;
+        scroll-snap-align: center;
+    }
+
+    .treatment-name {
+        font-size: 18px;
+        bottom: 50px;
+    }
+
+    .select-button {
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .tick-mark {
+        width: 25px;
+        height: 25px;
+        font-size: 16px;
+    }
+
+    /* Hide slider arrows on mobile */
+    .slider-arrow {
+        display: none;
+    }
+
+    /* Overlay styles */
+    .treatment-slider-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0);
+        z-index: 1000;
+        pointer-events: none;
+        transition: background-color 0.3s ease;
+    }
+
+    .treatment-slider-overlay.visible {
+        background-color: rgba(255, 255, 255, 0.3);
+        pointer-events: auto;
+    }
+
+    /* Disable scrolling when a card is selected */
+    .treatment-slider.card-selected {
+        overflow-x: hidden;
+    }
+    .treatment-slider-container.selected {
+        opacity: 0.1;
+    }
+    .treatment-card.selected {
+        transform: scale(1.0);
+        z-index: 1001;
+    }
+
+    .days-options-container,
+    .times-options-container,
+    .final-choices-container {
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .day-option-item,
+    .time-option-item,
+    .final-choice-item {
+        padding: 12px 12px;
+        font-size: 16px;
+    }
+
+    .day-option-item input[type="checkbox"],
+    .time-option-item input[type="radio"],
+    .final-choice-item input[type="radio"] {
+        width: 16px;
+        height: 16px;
+    }
+
+    .days-continue-button {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    #days-selection-container {
+        max-width: 90%;
+    }
+
+    .redo-button-treatment,
+    .redo-button-day,
+    .redo-button-time,
+    .redo-button-final-choice {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+
+
+    .after-treatment-follow-messages-container,
+    .days-follow-up-message-container,
+    .email-follow-up-container,
+    .enquiry-messages-container,
+    .final-messages-container,
+    .final-messages-container {
+        margin-top: 20px;
+    }
+
+    .enquiry-text-area-container {
+        margin-top: 10px;
+    }
+
+    #enquiry-text-area {
+        font-size: 16px;
+        min-height: 40px;
+    }
+
+    .enquiry-text-area-container button {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+
+
+@media screen and (max-width: 391px) and (max-height:960px) {
+    .chatbot-container {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        height: 100%;
+        max-height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    #chatbot-container {
+        height: calc(100% - 60px); /* Adjust based on your header/footer height */
+        width: 75%;
+        border-radius: 0;
+        padding: 10px;
+        margin-left: 5px;
+        margin-bottom: 50px;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.9) 30%)
+    }
+
+    .chatbot-message {
+        max-width: 95%;
+        padding-bottom: 5px;
+    }
+
+    .chatbot-message .message-content {
+        font-size: 14px;
+        padding: 8px 11px;
+    }
+
+    .chatbot-message img.avatar {
+        width: 38px;
+        height: 38px;
+    }
+
+    .intents-options-container,
+    .patient-options-container,
+    .privacy-options-container{
+        padding: 9px;
+        margin-top: 20px;
+    }
+
+    .intent-option-item {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .patient-option-button,
+    .privacy-option-button {
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .redo-button-intent,
+    .redo-button-patient,
+    .redo-button-name,
+    .redo-button-name-emergency,
+    .redo-button-enquiry,
+    .redo-button-email,
+    .redo-button-final-choice,
+    .redo-button-privacy {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+
+    .name-input-container,
+    .name-input-container-emergency,
+    .email-input-container,
+    .phone-input-container,
+    .dob-input-container {
+        margin-top: 12px;
+    }
+
+    #user-name-input,
+    #user-name-input-emergency,
+    #user-email-input,
+    #user-phone-input,
+    #user-dob-input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .name-input-container button,
+    .name-input-container-emergency button,
+    .email-input-container button,
+    .phone-input-container button,
+    .dob-input-container button {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .name-input-container button i,
+    .name-input-container-emergency button i,
+    .email-input-container button i,
+    .phone-input-container button i,
+    .dob-input-container button i{
+        padding: 3px;
+        font-size: 14px;
+    }
+
+    .treatment-slider-container {
+        padding: 5px 10px;
+        margin: 15px auto 0;
+    }
+
+    .treatment-slider {
+        gap: 40px;
+        margin-left: 10px;
+    }
+
+    .treatment-card {
+        min-width: 200px;
+        max-width: 200px;
+        height: 200px;
+    }
+
+    .treatment-name {
+        font-size: 16px;
+        bottom: 45px;
+    }
+
+    .select-button {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .tick-mark {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    .days-options-container,
+    .times-options-container,
+    .final-choices-container {
+        margin-top: 15px;
+        padding: 8px;
+    }
+
+    .day-option-item,
+    .time-option-item,
+    .final-choice-item {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .day-option-item input[type="checkbox"],
+    .time-option-item input[type="radio"],
+    .final-choice-item input[type="radio"] {
+        width: 14px;
+        height: 14px;
+    }
+
+    .days-continue-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    #days-selection-container {
+        max-width: 95%;
+    }
+
+    .redo-button-treatment,
+    .redo-button-day,
+    .redo-button-time {
+        width: 25px;
+        height: 25px;
+        font-size: 14px;
+    }
+
+    .after-treatment-follow-messages-container,
+    .days-follow-up-message-container,
+    .email-follow-up-container,
+    .enquiry-messages-container,
+    .final-messages-container {
+        margin-top: 20px;
+    }
+
+    .enquiry-text-area-container {
+        margin-top: 10px;
+    }
+
+    #enquiry-text-area {
+        font-size: 14px;
+        min-height: 35px;
+        padding: 15px;
+    }
+
+    .enquiry-text-area-container button {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+    .enquiry-text-area-container button i{
+        padding: 3px;
+        font-size: 14px;
+    }
+    .enquiry-options-container{
+        padding: 10px 5px;
+    }
+
+    .enquiry-option-button{
+        padding: 20px;
+    }
+    .modal-content{
+        padding: 15px;
+        margin-left:10px;
+    }
+}
+
+
+
+/* Original CSS and previous media queries remain unchanged */
+
+/* Additional styles for viewport height of 750px or less */
+@media screen and (max-height: 750px) and (max-width:470px) {
+    .chatbot-message .message-content {
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+
+    .chatbot-message img.avatar {
+        width: 35px;
+        height: 35px;
+    }
+
+    .intents-options-container,
+    .patient-options-container,
+    .enquiry-options-container,
+    .privacy-options-container {
+        margin-top: 15px;
+        padding: 8px;
+    }
+
+    .intent-option-item {
+        padding: 8px;
+        font-size: 12px;
+    }
+    .final-choice-item{
+        padding: 10px;
+    }
+    .final-choices-container{
+        padding: 10px;
+        padding-bottom: 8px;
+    }
+    .patient-option-button,
+    .privacy-option-button,
+    .enquiry-option-button {
+        padding: 12px;
+        font-size: 12px;
+    }
+    .final-choice-item la
+    .redo-button-intent,
+    .redo-button-patient,
+    .redo-button-name,
+    .redo-button-name-emergency,
+    .redo-button-enquiry,
+    .redo-button-email,
+    .redo-button-final-choice,
+    .redo-button-privacy,
+    .redo-button-phone,
+    .redo-icon-dob {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+
+    .name-input-container,
+    .name-input-container-emergency,
+    .email-input-container,
+    .phone-input-container,
+    .dob-input-container {
+        margin-top: 8px;
+    }
+
+    #user-name-input,
+    #user-name-input-emergency,
+    #user-email-input,
+    #user-phone-input,
+    #user-dob-input {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .name-input-container button,
+    .name-input-container-emergency button,
+    .email-input-container button,
+    .phone-input-container button,
+    .dob-input-container button {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .treatment-slider-container {
+        margin: 15px auto 0;
+    }
+
+    .treatment-card {
+        min-width: 180px;
+        max-width: 180px;
+        height: 180px;
+    }
+
+    .treatment-name {
+        font-size: 15px;
+        bottom: 40px;
+    }
+
+    .select-button {
+        font-size: 11px;
+        padding: 5px;
+    }
+
+    .tick-mark {
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+    }
+
+    .days-options-container,
+    .times-options-container {
+        margin-top: 15px;
+        padding: 8px;
+    }
+
+    .day-option-item,
+    .time-option-item {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .day-option-item input[type="checkbox"],
+    .time-option-item input[type="radio"] {
+        width: 14px;
+        height: 14px;
+    }
+
+    .days-continue-button {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .redo-button-treatment,
+    .redo-button-day,
+    .redo-button-time {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+    }
+
+    .after-treatment-follow-messages-container,
+    .days-follow-up-message-container,
+    .email-follow-up-container,
+    .enquiry-messages-container,
+    .final-messages-container {
+        margin-top: 15px;
+    }
+
+    .enquiry-text-area-container {
+        margin-top: 8px;
+    }
+
+    #enquiry-text-area {
+        font-size: 12px;
+        min-height: 35px;
+        padding: 12px;
+    }
+
+    .final-choice-item label{
+        font-size: 12px;
+    }
+
+    .enquiry-text-area-container button {
+        width: 30px;
+        height: 30px;
+    }
+
+}
+
+
+@media screen and (min-height: 1000px) and (max-height: 1370px) and (min-width: 710px) and (max-width: 1024px){
+    .chatbot-container {
+        position: fixed;
+        top: 10%;
+        bottom: 10%;
+        right: 0px;
+        width: 400px;
+        max-height: 80vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #chatbot-container {
+        height: 77%;
+        display: flex;
+        flex-direction: column;
+    }
+
+
+    .chatbot-message .message-content {
+        font-size: 16px;
+        padding: 12px 15px;
+    }
+
+    .chatbot-message img.avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .intents-options-container{
+        margin-top: 20px;
+        padding: 20px;
+    }
+    .patient-options-container,
+    .privacy-options-container {
+        margin-top: 20px;
+        padding: 15px 5px;
+    }
+
+    .enquiry-options-container{
+        padding: 15px 0px;
+    }
+
+    .intent-option-item,
+    .final-choice-item {
+        padding: 10px;
+        font-size: 16px;
+    }
+    .intent-option-item label,
+    .final-choice-item label,
+    .time-option-item label{
+        font-size: 16px;
+    }
+    .final-choice-item{
+        padding: 10px;
+    }
+    .final-choices-container{
+        padding: 10px;
+        padding-bottom: 8px;
+    }
+    .patient-option-button,
+    .privacy-option-button,
+    .enquiry-option-button {
+        padding: 25px 20px;
+        font-size: 16px;
+    }
+
+    .redo-button-intent,
+    .redo-button-patient,
+    .redo-button-name,
+    .redo-button-name-emergency,
+    .redo-button-enquiry,
+    .redo-button-email,
+    .redo-button-final-choice,
+    .redo-button-privacy,
+    .redo-button-phone,
+    .redo-icon-dob,
+    .redo-button-treatment,
+    .redo-button-day,
+    .redo-button-time  {
+        width: 30px;
+        height: 30px;
+        font-size: 20px;
+    }
+
+    .name-input-container,
+    .name-input-container-emergency,
+    .email-input-container,
+    .phone-input-container,
+    .dob-input-container {
+        margin-top: 20px;
+        flex-grow: 1;
+    }
+
+    #user-name-input,
+    #user-name-input-emergency,
+    #user-email-input,
+    #user-phone-input,
+    #user-dob-input {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .name-input-container button,
+    .name-input-container-emergency button,
+    .email-input-container button,
+    .phone-input-container button,
+    .dob-input-container button {
+        padding: 10px 10px;
+        font-size: 16px;
+    }
+
+    .treatment-slider-container {
+        margin: 20px auto 0;
+    }
+    .treatment-slider{
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 40px;
+    }
+    .treatment-card {
+        min-width: 300px;
+        max-width: 300px;
+        height: 300px;
+        scroll-snap-align: center;
+    }
+    .slider-arrow{
+        display: none;
+    }
+
+    .treatment-name {
+        font-size: 25px;
+        bottom: 55px;
+    }
+
+    .select-button {
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .tick-mark {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+
+    .treatment-slider-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0);
+            /* z-index: 1000; */
+            pointer-events: none;
+            transition: background-color 0.3s ease;
+    }
+    
+    .treatment-slider-overlay.visible {
+            background-color: rgba(255, 255, 255, 0.4);
+            pointer-events: auto;
+    }
+    
+    Disable scrolling when a card is selected
+     .treatment-slider.card-selected {
+            overflow-x: hidden;
+    }
+    .treatment-slider-container.selected {
+            opacity: 0.1;
+    }
+   .treatment-card.selected {
+            transform: scale(1.0);
+            z-index: 1001;
+    }
+
+    .days-options-container,
+    .times-options-container {
+        margin-top: 20px;
+        padding: 15px;
+    }
+
+    .day-option-item,
+    .time-option-item {
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    .day-option-item input[type="checkbox"],
+    .time-option-item input[type="radio"] {
+        width: 16px;
+        height: 16px;
+    }
+
+    .days-continue-button {
+        padding: 15px;
+        font-size: 15px;
+    }
+
+    .after-treatment-follow-messages-container,
+    .days-follow-up-message-container,
+    .email-follow-up-container,
+    .enquiry-messages-container,
+    .final-messages-container {
+        margin-top: 20px;
+    }
+
+
+    #chatbot-options,
+    .photo-follow-container {
+        flex-shrink: 0;
+    }
+
+    .enquiry-text-area-container {
+        margin-top: 15px;
+        padding: 10px;
+    }
+
+    #enquiry-text-area {
+        font-size: 16px;
+        min-height: 40px;
+        padding: 12px;
+    }
+
+    .final-choice-item label{
+        font-size: 16px;
+    }
+
+    .enquiry-text-area-container button {
+        width: 40px;
+        height: 40px;
+    }
+
+}     
