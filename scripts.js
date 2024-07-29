@@ -5,6 +5,8 @@
         const chatbotOptions = document.getElementById('chatbot-options');
         let toggleIcon = chatbotToggle.querySelector('.fa-comments');
         let closeIcon = chatbotToggle.querySelector('.fa-times');
+        let patientOptionsAdded = false;
+
         
         let chatbotInitialized = false;
         let chatbotManuallyOpened = false;
@@ -570,50 +572,53 @@
         }
 
         function proceedWithBooking() {
-            const optionsElement = document.querySelector('#chatbot-options');
+    if (patientOptionsAdded) {
+        console.log("Patient options already added. Skipping.");
+        return;
+    }
 
-            const loadingContainer = document.createElement('div');
-            loadingContainer.classList.add('loading-container');
+    const optionsElement = document.querySelector('#chatbot-options');
 
-            const loadingElement = document.createElement('div');
-            loadingElement.classList.add('chatbot-message', 'bot', 'loading-message');
-            loadingElement.innerHTML = `
-                <img src="https://cdn.jsdelivr.net/gh/bose9999/dently-bot/images/avatar.jpg" alt="Avatar" class="avatar">
-                <div class="message-content">
-                    <div class="loading">
-                        <span></span><span></span><span></span>
-                    </div>
-                </div>
-            `;
-            loadingContainer.appendChild(loadingElement);
+    const loadingContainer = document.createElement('div');
+    loadingContainer.classList.add('loading-container');
 
-            optionsElement.insertAdjacentElement('afterend', loadingContainer);
+    const loadingElement = document.createElement('div');
+    loadingElement.classList.add('chatbot-message', 'bot', 'loading-message');
+    loadingElement.innerHTML = `
+        <img src="https://cdn.jsdelivr.net/gh/bose9999/dently-bot/images/avatar.jpg" alt="Avatar" class="avatar">
+        <div class="message-content">
+            <div class="loading">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    `;
+    loadingContainer.appendChild(loadingElement);
 
-            
+    optionsElement.insertAdjacentElement('afterend', loadingContainer);
 
-            setTimeout(() => {
-                loadingContainer.remove();
+    setTimeout(() => {
+        loadingContainer.remove();
 
-                const newMessageContainer = document.createElement('div');
-                newMessageContainer.classList.add('chatbot-message', 'bot');
-                newMessageContainer.innerHTML = `
-                    <img src="https://cdn.jsdelivr.net/gh/bose9999/dently-bot/images/avatar.jpg" alt="Avatar" class="avatar" style="margin-top:20px">
-                    <div class="message-content" id="patient-ask-msg" style="margin-top:20px"><strong>Are you a new or existing patient?</strong></div>
-                `;
-                optionsElement.insertAdjacentElement('afterend', newMessageContainer);
+        const newMessageContainer = document.createElement('div');
+        newMessageContainer.classList.add('chatbot-message', 'bot');
+        newMessageContainer.innerHTML = `
+            <img src="https://cdn.jsdelivr.net/gh/bose9999/dently-bot/images/avatar.jpg" alt="Avatar" class="avatar" style="margin-top:20px">
+            <div class="message-content" id="patient-ask-msg" style="margin-top:20px"><strong>Are you a new or existing patient?</strong></div>
+        `;
+        optionsElement.insertAdjacentElement('afterend', newMessageContainer);
 
-                const patientOptionsContainer = document.createElement('div');
-                patientOptionsContainer.classList.add('patient-options-container');
-                patientOptionsContainer.innerHTML = `
-                    <button class="patient-option-button" onclick="handlePatientOption('new')">New Patient</button>
-                    <button class="redo-button-patient hidden" onclick="redoPatientSelection()">↻</button>
-                    <button class="patient-option-button" onclick="handlePatientOption('existing')">Existing Patient</button>
-                `;
-                newMessageContainer.insertAdjacentElement('afterend', patientOptionsContainer);
+        const patientOptionsContainer = document.createElement('div');
+        patientOptionsContainer.classList.add('patient-options-container');
+        patientOptionsContainer.innerHTML = `
+            <button class="patient-option-button" onclick="handlePatientOption('new')">New Patient</button>
+            <button class="redo-button-patient hidden" onclick="redoPatientSelection()">↻</button>
+            <button class="patient-option-button" onclick="handlePatientOption('existing')">Existing Patient</button>
+        `;
+        newMessageContainer.insertAdjacentElement('afterend', patientOptionsContainer);
 
-                
-            }, 1500);
-        }
+        patientOptionsAdded = true;
+    }, 1500);
+}
 
         window.handlePatientOption = function(patientType) {
             const options = document.querySelectorAll('.patient-option-button');
