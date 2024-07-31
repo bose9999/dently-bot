@@ -112,10 +112,12 @@ body {
 }
 
 .chatbot-container {
-    position: fixed;
-    bottom: 90px;
+    position: absolute;
+    bottom:0;
+    right:0;
+/*     bottom: 90px;
     right: 0px;
-    width: 300px;
+    width: 300px; */
     height: auto;
     overflow: hidden;
     pointer-events: auto;
